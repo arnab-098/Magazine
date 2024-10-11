@@ -1,0 +1,45 @@
+"use client";
+
+import { pdfjs } from "react-pdf";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.mjs`;
+
+import axios from "axios";
+import { Pdf } from "@/types";
+import NoResults from "@/components/NoResults";
+import MasonryLayout from "@/components/MasonryLayout";
+import { BASE_URL } from "@/utils";
+
+interface IProps {
+  magazines: Pdf[];
+}
+
+const Home = ({ magazines }: IProps) => {
+  return (
+    <div>
+      {magazines.length ? (
+        <MasonryLayout pdfs={magazines} />
+      ) : (
+        <NoResults text={"No pdfs"} />
+      )}
+    </div>
+  );
+};
+
+export const getServerSideProps = async ({
+  query: { topic },
+}: {
+  query: { topic: string };
+}) => {
+  let response = await axios.get(`${BASE_URL}/api/post`);
+
+  if (topic) {
+    response = await axios.get(`${BASE_URL}/api/discover/${topic}`);
+  }
+
+  return {
+    props: { magazines: response.data },
+  };
+};
+
+export default Home;
