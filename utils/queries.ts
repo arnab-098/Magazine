@@ -90,3 +90,33 @@ export const topicPostsQuery = (category: string | string[] | undefined) => {
 
   return query;
 };
+
+export const searchPostsQuery = (searchTerm: string | string[] | undefined) => {
+  const query = `*[_type == "post" && description match '${searchTerm}*' || category match '${searchTerm}*'] {
+    _id,
+    description,
+    magazine_pdf{
+      asset->{
+        _id,
+        url
+      }
+    },
+    thumbnail{
+      asset->{
+        url
+      }
+    },
+    userId,
+    likes,
+    review[]{
+      review,
+      _key,
+      postedBy->{
+        _id,
+        userName,
+        image
+      },
+    }
+  }`;
+  return query;
+};
