@@ -14,7 +14,7 @@ const Search = ({ magazines }: IProps) => {
       {magazines.length ? (
         <MasonryLayout pdfs={magazines} />
       ) : (
-        <NoResults text={"No pdfs"} />
+        <NoResults text={"No magazines found"} />
       )}
     </div>
   );

@@ -120,3 +120,9 @@ export const searchPostsQuery = (searchTerm: string | string[] | undefined) => {
   }`;
   return query;
 };
+
+export const allUsersQuery = () => {
+  const query = `*[_type == "user"]`;
+
+  return query;
+};

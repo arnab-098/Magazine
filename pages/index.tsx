@@ -20,7 +20,7 @@ const Home = ({ magazines }: IProps) => {
       {magazines.length ? (
         <MasonryLayout pdfs={magazines} />
       ) : (
-        <NoResults text={"No pdfs"} />
+        <NoResults text={"No magazines of this category"} />
       )}
     </div>
   );

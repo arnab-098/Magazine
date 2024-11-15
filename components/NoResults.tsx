@@ -6,7 +6,7 @@ interface IProps {
 }
 
 const NoResults: NextPage<IProps> = ({ text }) => {
-  return <div>NoResults</div>;
+  return <div>{text}</div>;
 };
 
 export default NoResults;

@@ -1,18 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { BiSearch } from "react-icons/bi";
+import { AiOutlineLogout } from 'react-icons/ai';
+import { GoogleLogin, googleLogout } from '@react-oauth/google';
 
-import Logo from "../utils/tiktik-logo.png";
+import Logo from "../public/assets/logo-modified.png";
+import { IUser } from '../types';
+import useAuthStore from '../store/authStore';
+import { createOrGetUser } from '../utils';
 
 const Navbar = () => {
+  const [user, setUser] = useState<IUser | null>();
+  const { userProfile, addUser, removeUser } = useAuthStore();
   const [searchValue, setSearchValue] = useState('');
   const router = useRouter();
 
+  useEffect(() => {
+    setUser(userProfile);
+  }, [userProfile]);
+
   const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-
     if (searchValue) {
       router.push(`/search/${searchValue}`);
     }
@@ -23,10 +33,11 @@ const Navbar = () => {
       <Link href="/">
         <div className="w-[100px] md:w-[130px]">
           <Image
-            className="cursor-pointer"
+            className="cursor-pointer w-[100px] h-[100px]"
             src={Logo}
-            alt="MagzLink"
-            layout="responsive"
+            alt="Logo"
+            width={50}
+            height={50}
           />
         </div>
       </Link>
@@ -49,7 +60,39 @@ const Navbar = () => {
           </button>
         </form>
       </div>
-    </div>
+      <div>
+        {user ? (
+          <div className='flex gap-5 md:gap-10'>
+            {user.image && (
+              <div>
+                <Image
+                  className='rounded-full'
+                  src={user.image}
+                  alt='user'
+                  width={40}
+                  height={40}
+                />
+              </div>
+            )}
+            <button
+              type='button'
+              className=' border-2 p-2 rounded-full cursor-pointer outline-none shadow-md'
+              onClick={() => {
+                googleLogout();
+                removeUser();
+              }}
+            >
+              <AiOutlineLogout color='red' fontSize={21} />
+            </button>
+          </div>
+        ) : (
+          <GoogleLogin
+            onSuccess={(response) => createOrGetUser(response, addUser)}
+            onError={() => console.log('Login Failed')}
+          />
+        )}
+      </div>
+    </div >
   );
 };
 

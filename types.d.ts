@@ -34,4 +34,11 @@ export interface Pdf {
   userId: string;
 }
 
+export interface IUser {
+  _id: string;
+  _type: string;
+  userName: string;
+  image: string;
+}
+
 declare module "*.pdf";
