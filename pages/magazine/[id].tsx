@@ -1,38 +1,15 @@
 "use client";
-
-import { pdfjs } from "react-pdf";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.mjs`;
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/utils";
 import { Pdf } from "@/types";
 import { Document, Page } from "react-pdf";
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-if (typeof Promise.withResolvers === "undefined") {
-  if (window) {
-    // @ts-expect-error This does not exist outside of polyfill which this is doing
-    window.Promise.withResolvers = function() {
-      let resolve, reject
-      const promise = new Promise((res, rej) => {
-        resolve = res
-        reject = rej
-      })
-      return { promise, resolve, reject }
-    }
-  } else {
-    // @ts-expect-error This does not exist outside of polyfill which this is doing
-    global.Promise.withResolvers = function() {
-      let resolve, reject
-      const promise = new Promise((res, rej) => {
-        resolve = res
-        reject = rej
-      })
-      return { promise, resolve, reject }
-    }
-  }
-}
+// Initialize pdfjs worker
+import { pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 interface IProps {
   magazineDetails: Pdf;
@@ -41,9 +18,23 @@ interface IProps {
 const Detail = ({ magazineDetails }: IProps) => {
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Any initialization if needed
+    setLoading(false);
+  }, []);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);
+    setLoading(false);
+    setError(null);
+  }
+
+  function onDocumentLoadError(error: Error): void {
+    setError("Failed to load PDF. Please try again.");
+    setLoading(false);
   }
 
   function changePage(offset: number) {
@@ -62,50 +53,80 @@ const Detail = ({ magazineDetails }: IProps) => {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="text-xl">Loading PDF...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="text-red-500">{error}</div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <Document
-        file={magazineDetails.magazine_pdf?.asset?.url}
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
-        <div className="flex justify-center gap-[5px]">
-          <div onClick={previousPage}>
-            <Page
-              pageNumber={pageNumber}
-              renderTextLayer={false}
-              renderAnnotationLayer={false}
-            />
-          </div>
-          <div onClick={nextPage}>
-            {pageNumber + 1 <= numPages && (
+    <div className="flex flex-col items-center">
+      <div className="pdf-container w-full max-w-4xl">
+        <Document
+          file={magazineDetails.magazine_pdf?.asset?.url}
+          onLoadSuccess={onDocumentLoadSuccess}
+          onLoadError={onDocumentLoadError}
+          loading={
+            <div className="flex justify-center items-center min-h-[400px]">
+              <div className="text-xl">Loading PDF...</div>
+            </div>
+          }
+        >
+          <div className="flex flex-col md:flex-row justify-center gap-4">
+            <div className="pdf-page">
               <Page
-                pageNumber={pageNumber + 1}
-                renderTextLayer={false}
-                renderAnnotationLayer={false}
+                key={`page_${pageNumber}`}
+                pageNumber={pageNumber}
+                renderTextLayer={true}
+                renderAnnotationLayer={true}
+                scale={1}
+                className="pdf-page-canvas"
               />
+            </div>
+            {pageNumber + 1 <= numPages && (
+              <div className="pdf-page">
+                <Page
+                  key={`page_${pageNumber + 1}`}
+                  pageNumber={pageNumber + 1}
+                  renderTextLayer={true}
+                  renderAnnotationLayer={true}
+                  scale={1}
+                  className="pdf-page-canvas"
+                />
+              </div>
             )}
           </div>
-        </div>
-      </Document>
-      <div className="mt-[30px] flex gap-[5px] justify-around items-center">
-        <div>
-          <button
-            className="width-[200px] focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-            disabled={pageNumber <= 1}
-            onClick={previousPage}
-          >
-            Previous
-          </button>
-        </div>
-        <div>
-          <button
-            className="width-[200px] focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-            disabled={pageNumber >= numPages - 1}
-            onClick={nextPage}
-          >
-            Next
-          </button>
-        </div>
+        </Document>
+      </div>
+
+      <div className="mt-6 flex gap-4 justify-center items-center w-full">
+        <button
+          className="px-6 py-2 bg-purple-700 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-800 transition-colors"
+          disabled={pageNumber <= 1}
+          onClick={previousPage}
+        >
+          Previous
+        </button>
+        <span className="text-sm">
+          Page {pageNumber} of {numPages}
+        </span>
+        <button
+          className="px-6 py-2 bg-purple-700 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-800 transition-colors"
+          disabled={pageNumber >= numPages - 1}
+          onClick={nextPage}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
@@ -116,11 +137,17 @@ export const getServerSideProps = async ({
 }: {
   params: { id: string };
 }) => {
-  const res = await axios.get(`${BASE_URL}/api/post/${id}`);
-
-  return {
-    props: { magazineDetails: res.data },
-  };
+  try {
+    const res = await axios.get(`${BASE_URL}/api/post/${id}`);
+    return {
+      props: { magazineDetails: res.data },
+    };
+  } catch (error) {
+    return {
+      props: { magazineDetails: null },
+      notFound: true,
+    };
+  }
 };
 
 export default Detail;
