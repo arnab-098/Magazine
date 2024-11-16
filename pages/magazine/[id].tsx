@@ -137,17 +137,10 @@ export const getServerSideProps = async ({
 }: {
   params: { id: string };
 }) => {
-  try {
-    const res = await axios.get(`${BASE_URL}/api/post/${id}`);
-    return {
-      props: { magazineDetails: res.data },
-    };
-  } catch (error) {
-    return {
-      props: { magazineDetails: null },
-      notFound: true,
-    };
-  }
+  const res = await axios.get(`${BASE_URL}/api/post/${id}`);
+  return {
+    props: { magazineDetails: res.data },
+  };
 };
 
 export default Detail;
