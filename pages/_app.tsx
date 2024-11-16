@@ -1,3 +1,9 @@
+"use client";
+
+import { pdfjs } from "react-pdf";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.mjs`;
+
 import { AppProps } from "next/app";
 import { useState, useEffect } from "react";
 import { GoogleOAuthProvider } from '@react-oauth/google';
