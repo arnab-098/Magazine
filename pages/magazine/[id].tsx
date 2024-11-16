@@ -3,6 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "@/utils";
 import { Pdf } from "@/types";
 import { Document, Page } from "react-pdf";
+import 'pdfjs-dist/legacy/build/pdf.worker.min.mjs';
 
 interface IProps {
   magazineDetails: Pdf;
