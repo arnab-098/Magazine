@@ -2,25 +2,31 @@ import React, { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/utils";
 import { Pdf } from "@/types";
-import { Document, Page, pdfjs } from "react-pdf";
+import { Document, Page } from "react-pdf";
 
-if (typeof Promise.withResolvers === 'undefined') {
-  if (window)
+if (typeof Promise.withResolvers === "undefined") {
+  if (window) {
     // @ts-expect-error This does not exist outside of polyfill which this is doing
     window.Promise.withResolvers = function() {
-      let resolve, reject;
+      let resolve, reject
       const promise = new Promise((res, rej) => {
-        resolve = res;
-        reject = rej;
-      });
-      return { promise, resolve, reject };
-    };
+        resolve = res
+        reject = rej
+      })
+      return { promise, resolve, reject }
+    }
+  } else {
+    // @ts-expect-error This does not exist outside of polyfill which this is doing
+    global.Promise.withResolvers = function() {
+      let resolve, reject
+      const promise = new Promise((res, rej) => {
+        resolve = res
+        reject = rej
+      })
+      return { promise, resolve, reject }
+    }
+  }
 }
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/legacy/build/pdf.worker.min.mjs',
-  import.meta.url
-).toString();
 
 interface IProps {
   magazineDetails: Pdf;
