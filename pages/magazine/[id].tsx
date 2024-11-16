@@ -1,3 +1,9 @@
+"use client";
+
+import { pdfjs } from "react-pdf";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.mjs`;
+
 import React, { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/utils";
