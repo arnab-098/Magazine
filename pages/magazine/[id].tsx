@@ -32,7 +32,7 @@ const Detail = ({ magazineDetails }: IProps) => {
     setError(null);
   }
 
-  function onDocumentLoadError(error: Error): void {
+  function onDocumentLoadError(): void {
     setError("Failed to load PDF. Please try again.");
     setLoading(false);
   }
