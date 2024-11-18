@@ -42,7 +42,10 @@ const Detail = ({ magazineDetails }: IProps) => {
   }
 
   function previousPage() {
-    if (pageNumber > 1) {
+    if (pageNumber == 2) {
+      changePage(-1);
+    }
+    if (pageNumber > 2) {
       changePage(-2);
     }
   }
