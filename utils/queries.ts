@@ -13,17 +13,6 @@ export const allPostsQuery = () => {
         url
       }
     },
-    userId,
-    likes,
-    review[]{
-      review,
-      _key,
-      postedBy->{
-        _id,
-        userName,
-        image
-      },
-    }
   }`;
 
   return query;
@@ -44,17 +33,6 @@ export const postDetailQuery = (magazineId: string | string[] | undefined) => {
         url
       }
     },
-    userId,
-    likes,
-    review[]{
-      review,
-      _key,
-      postedBy->{
-        _id,
-        userName,
-        image
-      },
-    }
   }`;
 
   return query;
@@ -75,17 +53,6 @@ export const topicPostsQuery = (category: string | string[] | undefined) => {
         url
       }
     },
-    userId,
-    likes,
-    review[]{
-      review,
-      _key,
-      postedBy->{
-        _id,
-        userName,
-        image
-      },
-    }
   }`;
 
   return query;
@@ -106,17 +73,6 @@ export const searchPostsQuery = (searchTerm: string | string[] | undefined) => {
         url
       }
     },
-    userId,
-    likes,
-    review[]{
-      review,
-      _key,
-      postedBy->{
-        _id,
-        userName,
-        image
-      },
-    }
   }`;
   return query;
 };

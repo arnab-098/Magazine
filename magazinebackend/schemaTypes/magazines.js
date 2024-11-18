@@ -25,23 +25,6 @@ export default {
       },
     },
     {
-      name: 'likes',
-      title: 'Likes',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{type: 'user'}],
-        },
-      ],
-    },
-    {
-      name: 'review',
-      title: 'Review',
-      type: 'array',
-      of: [{type: 'review'}],
-    },
-    {
       name: 'category',
       title: 'Category',
       type: 'string',

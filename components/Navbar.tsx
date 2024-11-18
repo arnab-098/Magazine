@@ -6,7 +6,6 @@ import { BiSearch } from "react-icons/bi";
 import { AiOutlineLogout } from 'react-icons/ai';
 import { GoogleLogin, googleLogout } from '@react-oauth/google';
 
-import Logo from "../public/assets/logo-modified.png";
 import { IUser } from '../types';
 import useAuthStore from '../store/authStore';
 import { createOrGetUser } from '../utils';
@@ -31,14 +30,8 @@ const Navbar = () => {
   return (
     <div className="w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
       <Link href="/">
-        <div className="w-[100px] md:w-[130px]">
-          <Image
-            className="cursor-pointer w-[100px] h-[100px]"
-            src={Logo}
-            alt="Logo"
-            width={50}
-            height={50}
-          />
+        <div className="text-4xl font-bold w-[100px] md:w-[130px]">
+          MagzLink
         </div>
       </Link>
       <div className='relative hidden md:block'>
