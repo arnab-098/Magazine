@@ -48,7 +48,9 @@ const Detail = ({ magazineDetails }: IProps) => {
   }
 
   function nextPage() {
-    if (pageNumber < numPages - 1) {
+    if (pageNumber == 1) {
+      changePage(1);
+    } else if (pageNumber < numPages - 1) {
       changePage(2);
     }
   }
@@ -82,8 +84,8 @@ const Detail = ({ magazineDetails }: IProps) => {
             </div>
           }
         >
-          <div className="flex flex-col md:flex-row justify-center gap-4">
-            <div className="pdf-page">
+          <div className="flex flex-col md:flex-row justify-center gap-2">
+            <div onClick={previousPage} className="cursor-pointer">
               <Page
                 key={`page_${pageNumber}`}
                 pageNumber={pageNumber}
@@ -93,8 +95,8 @@ const Detail = ({ magazineDetails }: IProps) => {
                 className="pdf-page-canvas"
               />
             </div>
-            {pageNumber + 1 <= numPages && (
-              <div className="pdf-page">
+            {pageNumber + 1 <= numPages && pageNumber > 1 && (
+              <div onClick={nextPage} className="cursor-pointer">
                 <Page
                   key={`page_${pageNumber + 1}`}
                   pageNumber={pageNumber + 1}
