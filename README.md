@@ -105,8 +105,3 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 ---
 
 For more projects by the author, visit [arnab-098's GitHub profile](https://github.com/arnab-098/).
-
----
-
-Would you like this saved as a file or pushed into the repository?
-
