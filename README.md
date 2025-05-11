@@ -1,7 +1,3 @@
-Here's the updated `README.md` content with your requested changes:
-
----
-
 # Magazine
 
 **Magazine** is a modern, full-stack web application designed to showcase magazine-style content. Built with Next.js and Sanity CMS, it offers a seamless and dynamic user experience.
