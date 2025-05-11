@@ -2,12 +2,12 @@
 
 **Magazine** is a modern, full-stack web application designed to showcase magazine-style content. Built with Next.js and Sanity CMS, it offers a seamless and dynamic user experience.
 
-## 🌐 Live Demo
+## Live Demo
 
 * **Frontend Website**: [https://magzlink.vercel.app/](https://magzlink.vercel.app/)
 * **Backend Admin (Sanity Studio)**: [https://magzlink.sanity.studio/](https://magzlink.sanity.studio/)
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Frontend**: [Next.js](https://nextjs.org/) with [TypeScript](https://www.typescriptlang.org/)
 * **Styling**: [Tailwind CSS](https://tailwindcss.com/)
@@ -16,7 +16,7 @@
 * **Build Tools**: [Webpack](https://webpack.js.org/), [PostCSS](https://postcss.org/)
 * **Package Manager**: Supports `npm`, `yarn`, `pnpm`, and `bun`
 
-## 📁 Project Structure
+## Project Structure
 
 * `.sanity/` – Sanity runtime configurations
 * `components/` – Reusable UI components
@@ -29,7 +29,7 @@
 * `styles/` – Global and component-specific styles
 * `utils/` – Helper functions and utilities
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -77,11 +77,11 @@ Ensure you have the following installed:
 
    Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-## 🧪 Testing
+## Testing
 
 *Note: Testing scripts and configurations are not specified in the repository. It's recommended to integrate testing frameworks like Jest or React Testing Library for comprehensive testing.*
 
-## 📦 Deployment
+## Deployment
 
 The application is configured for deployment on [Vercel](https://vercel.com/). To deploy:
 
@@ -90,11 +90,11 @@ The application is configured for deployment on [Vercel](https://vercel.com/). T
 3. Configure environment variables in the Vercel dashboard.
 4. Deploy the application.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
 
-## 📄 License
+## License
 
 *License information is not specified in the repository. It's recommended to include a license to clarify usage rights.*
 
