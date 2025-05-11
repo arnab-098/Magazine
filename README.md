@@ -94,10 +94,6 @@ The application is configured for deployment on [Vercel](https://vercel.com/). T
 
 Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
 
-## License
-
-*License information is not specified in the repository. It's recommended to include a license to clarify usage rights.*
-
 ---
 
 For more projects by the author, visit [arnab-098's GitHub profile](https://github.com/arnab-098/).
